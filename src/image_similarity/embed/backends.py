@@ -9,7 +9,7 @@ from typing import Protocol
 import numpy as np
 
 from image_similarity.embed.mock import MockEmbedBackend
-from image_similarity.embed.remote import RemoteEmbedBackend
+from image_similarity.embed.remote import RemoteEmbedBackend, autodetect_flavor
 from image_similarity.models import LibraryConfig
 
 
@@ -28,7 +28,18 @@ def build_backend(config: LibraryConfig) -> EmbedBackend:
         if not url:
             msg = "remote backend requires embed_http_url or EMBED_HTTP_URL"
             raise ValueError(msg)
-        return RemoteEmbedBackend(url=url, dim=config.manifest.embedding_dim)
+        session_key = (
+            config.embed_session_key or os.environ.get("EMBED_SESSION_KEY") or ""
+        )
+        flavor = config.manifest.remote_flavor
+        if flavor == "auto":
+            flavor = autodetect_flavor(url, session_key or None)
+        return RemoteEmbedBackend(
+            url=url,
+            dim=config.manifest.embedding_dim,
+            flavor=flavor,
+            session_key=session_key or None,
+        )
     if backend == "local":
         msg = "local EmbeddingGemma backend not implemented yet; use mock or remote"
         raise NotImplementedError(msg)

@@ -20,6 +20,7 @@ class EmbeddingManifest(BaseModel):
     vision_soft_tokens_per_image: int = 280
     metric: Literal["cosine"] = "cosine"
     backend: Literal["mock", "remote", "local"] = "mock"
+    remote_flavor: Literal["photosearch", "json_batch", "auto"] = "auto"
 
 
 class LibraryConfig(BaseModel):
@@ -28,6 +29,7 @@ class LibraryConfig(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     manifest: EmbeddingManifest = Field(default_factory=EmbeddingManifest)
     embed_http_url: str | None = None
+    embed_session_key: str | None = None
 
 
 class ImageRecord(BaseModel):

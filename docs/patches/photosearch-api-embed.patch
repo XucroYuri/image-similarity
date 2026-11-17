@@ -1,0 +1,24 @@
+--- a/app.py
++++ b/app.py
+@@ -225,6 +225,21 @@ async def uploaded_image(file):
+         await file.close()
+ 
+ 
++@app.post("/api/embed")
++async def embed_image(file: UploadFile = File(...)):
++    """Return L2-normalized EmbeddingGemma vision vector for CLI clients."""
++    image = await uploaded_image(file)
++    try:
++        vector = await run_in_threadpool(semantic.encode, image)
++    except Exception as exc:
++        raise HTTPException(503, f"语义模型暂不可用：{exc}")
++    return {
++        "embedding": vector.tolist(),
++        "dim": int(vector.shape[0]),
++        "model": semantic.status(),
++    }
++
++
+ @app.post("/api/reference")
+ async def reference(file: UploadFile = File(...)):
+     image = await uploaded_image(file)

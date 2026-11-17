@@ -34,10 +34,13 @@ uv run image-similarity stats demo
 ## 配置
 
 - `IMAGE_SIM_INDEX_ROOT`：索引根目录
-- `EMBED_HTTP_URL`：`remote` 后端服务基址（如 `http://192.168.1.100:8096`）
+- `EMBED_HTTP_URL`：`remote` 后端基址（PhotoSearch：`http://192.168.1.100:8096`）
+- `EMBED_SESSION_KEY`：PhotoSearch `data/access.key` 内容（`POST /api/session`）
 - `EMBEDDINGGEMMA2_MODEL_PATH`：后续 `local` 后端使用
 
-在 `library.json` 中可把 `manifest.backend` 设为 `remote`，并设置 `embed_http_url`。
+`remote` 默认对接 **PhotoSearch_EmbeddingGemma2**：`multipart` `POST /api/embed`（见 `docs/PHOTOSEARCH_HTTP.md`）。
+
+在 `library.json` 中可把 `manifest.backend` 设为 `remote`、`manifest.remote_flavor` 设为 `photosearch` 或 `auto`，并设置 `embed_http_url` / `embed_session_key`。
 
 ## 文档
 
