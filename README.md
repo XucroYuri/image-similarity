@@ -13,6 +13,9 @@ cd /Volumes/SSD/Code/04-ai-vision/image-similarity
 uv sync --all-groups
 
 uv run image-similarity init demo --root /path/to/photos
+
+# 对接局域网 PhotoSearch（8096）
+uv run image-similarity init demo --remote --root /path/to/photos
 uv run image-similarity scan demo
 uv run image-similarity search demo --query /path/to/photos/q.jpg --top-k 10
 uv run image-similarity stats demo
