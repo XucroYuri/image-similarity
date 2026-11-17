@@ -2,7 +2,8 @@
 
 基于 **Google EmbeddingGemma 2** 的通用 **以图搜图** CLI：扫描图片库、写入向量索引、按查询图返回 Top-K 相似结果。
 
-- **分类目录**：`/Volumes/SSD/Code/04-ai-vision/`（与 Visage、CornerCrop 同属视觉能力）
+- **Github 分类**：`03-工具与实验/图像视频/`（server：`~/code/Github/03-工具与实验/图像视频/image-similarity`）
+- **Mac 副本**：`/Volumes/SSD/Code/04-ai-vision/image-similarity`
 - **V1 范围**：CLI 内核 + `mock` / `remote` embed 后端；不含 Web UI
 - **模型权重**（server）：`/mnt/AIGC/models/huggingface/google/embeddinggemma-2`
 
