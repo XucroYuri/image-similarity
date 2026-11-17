@@ -30,6 +30,7 @@ class LibraryConfig(BaseModel):
     manifest: EmbeddingManifest = Field(default_factory=EmbeddingManifest)
     embed_http_url: str | None = None
     embed_session_key: str | None = None
+    model_path: str | None = None
 
 
 class ImageRecord(BaseModel):

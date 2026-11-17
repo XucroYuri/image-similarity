@@ -28,3 +28,7 @@ dev = [
     "ruff>=0.17.5",
     "ty>=0.0.104",
 ]
+local = [
+    "sentence-transformers>=3.3.0",
+    "torch>=2.5.0",
+]

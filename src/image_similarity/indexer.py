@@ -56,7 +56,14 @@ class Indexer:
             paths = [p for _, p, _ in chunk]
             try:
                 vectors = self.backend.encode_paths(paths)
-            except (OSError, RuntimeError, ValueError, NotImplementedError) as exc:
+            except (
+                OSError,
+                RuntimeError,
+                ValueError,
+                NotImplementedError,
+                ImportError,
+                FileNotFoundError,
+            ) as exc:
                 err = str(exc)[:500]
                 for _, _, rec in chunk:
                     rec.status = "failed"

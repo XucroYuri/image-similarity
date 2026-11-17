@@ -41,6 +41,6 @@ image-similarity rebuild LIBRARY [--force]
 |---|---|
 | `mock` | 确定性伪向量，仅测试管线 |
 | `remote` | PhotoSearch：`EMBED_HTTP_URL` + `EMBED_SESSION_KEY`，`POST /api/embed`（见 `docs/PHOTOSEARCH_HTTP.md`）；`json_batch` 为可选自建 JSON API |
-| `local` | 加载 HF 权重（后续实现，依赖 torch/transformers） |
+| `local` | `init --local`；`EMBEDDINGGEMMA2_MODEL_PATH` 或 `/mnt/AIGC/.../embeddinggemma-2`；`uv sync --group local` |
 
 默认开发期 `mock`；联调 server 用 `remote`。

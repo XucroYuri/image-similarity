@@ -16,6 +16,11 @@ uv run image-similarity init demo --root /path/to/photos
 
 # 对接局域网 PhotoSearch（8096）
 uv run image-similarity init demo --remote --root /path/to/photos
+
+# 本机 GPU 加载 EmbeddingGemma（Ubuntu 服务器）
+uv sync --group local
+export EMBEDDINGGEMMA2_MODEL_PATH=/mnt/AIGC/models/huggingface/google/embeddinggemma-2
+uv run image-similarity init demo --local --root /path/to/photos
 uv run image-similarity scan demo
 uv run image-similarity search demo --query /path/to/photos/q.jpg --top-k 10
 uv run image-similarity stats demo

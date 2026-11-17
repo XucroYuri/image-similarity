@@ -8,8 +8,10 @@ from typing import Protocol
 
 import numpy as np
 
+from image_similarity.embed.local import LocalEmbedBackend
 from image_similarity.embed.mock import MockEmbedBackend
 from image_similarity.embed.remote import RemoteEmbedBackend, autodetect_flavor
+from image_similarity.local_config import resolve_model_path
 from image_similarity.models import LibraryConfig
 
 
@@ -41,7 +43,7 @@ def build_backend(config: LibraryConfig) -> EmbedBackend:
             session_key=session_key or None,
         )
     if backend == "local":
-        msg = "local EmbeddingGemma backend not implemented yet; use mock or remote"
-        raise NotImplementedError(msg)
+        path = resolve_model_path(config.model_path)
+        return LocalEmbedBackend(path, dim=config.manifest.embedding_dim)
     msg = f"unknown backend: {backend}"
     raise ValueError(msg)

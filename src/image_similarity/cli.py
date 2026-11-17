@@ -10,6 +10,7 @@ from rich.table import Table
 
 from image_similarity.indexer import Indexer
 from image_similarity.library import Library, list_libraries
+from image_similarity.local_config import build_local_library_config
 from image_similarity.paths import default_index_root
 from image_similarity.remote_config import build_remote_library_config
 from image_similarity.search import Searcher
@@ -40,6 +41,17 @@ def cli() -> None:
     help="Use PhotoSearch embed backend (EMBED_HTTP_URL / EMBED_SESSION_KEY)",
 )
 @click.option(
+    "--local",
+    is_flag=True,
+    help="Load EmbeddingGemma 2 on this machine (uv sync --group local)",
+)
+@click.option(
+    "--model-path",
+    default=None,
+    type=click.Path(file_okay=False, path_type=Path),
+    help="Weights directory (local); default EMBEDDINGGEMMA2_MODEL_PATH / server AIGC path",
+)
+@click.option(
     "--embed-url",
     default=None,
     help="PhotoSearch base URL (default: EMBED_HTTP_URL or 192.168.1.100:8096)",
@@ -50,11 +62,16 @@ def init_library(
     library_id: str,
     root: Path,
     remote: bool,
+    local: bool,
     embed_url: str | None,
     session_key: str | None,
+    model_path: Path | None,
     index_root: Path | None,
 ) -> None:
+    if remote and local:
+        raise click.ClickException("use either --remote or --local, not both")
     config = None
+    mp = str(model_path) if model_path else None
     if remote:
         try:
             config = build_remote_library_config(
@@ -65,14 +82,26 @@ def init_library(
             )
         except ValueError as exc:
             raise click.ClickException(str(exc)) from exc
+    elif local:
+        try:
+            config = build_local_library_config(
+                library_id,
+                str(root),
+                model_path=mp,
+            )
+        except ValueError as exc:
+            raise click.ClickException(str(exc)) from exc
     lib = Library.create(library_id, str(root), index_root=index_root, config=config)
     backend = lib.config.manifest.backend
     embed = lib.config.embed_http_url if remote else None
+    weights = lib.config.model_path if local else None
     out_dir = lib.paths.library_dir
     lib.close()
     console.print(f"[green]Created library[/green] {library_id} at {out_dir}")
     if remote:
         console.print(f"  backend={backend} embed_url={embed}")
+    if local:
+        console.print(f"  backend={backend} model_path={weights}")
 
 
 @cli.command("scan")

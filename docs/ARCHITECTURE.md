@@ -10,7 +10,7 @@ V1 仅 CLI + 本地/远程 embed 后端；不包含 Web UI。
 
 `PhotoSearch_EmbeddingGemma2`（server:8096, uvicorn）验证过推理服务形态。本仓库把「库管理 + 扫描 + 索引 + 检索」产品化，embed 可对接：
 
-- **local**：本机 SentenceTransformers 加载 `/mnt/AIGC/models/huggingface/google/embeddinggemma-2`
+- **local**：本机 SentenceTransformers（`uv sync --group local`），默认权重目录 `/mnt/AIGC/models/huggingface/google/embeddinggemma-2`，可选回退 PhotoSearch 已下载副本
 - **remote**：HTTP 调用既有 FastAPI（兼容旧实验）
 
 ## 分层
