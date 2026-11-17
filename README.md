@@ -20,6 +20,7 @@ uv run image-similarity init demo --remote --root /path/to/photos
 
 # 本机 GPU 加载 EmbeddingGemma（Ubuntu 服务器）
 uv sync --group local
+# 默认即 AIGC 路径（见 docs/MODEL_WEIGHTS.md）
 export EMBEDDINGGEMMA2_MODEL_PATH=/mnt/AIGC/models/huggingface/google/embeddinggemma-2
 uv run image-similarity init demo --local --root /path/to/photos
 uv run image-similarity scan demo
