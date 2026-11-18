@@ -2,7 +2,8 @@
 
 **生效：** 2026-11-18  
 **本机（唯一可写开发树）：** `~/code` → `/mnt/Dev/code/Github/`（中文分类：01–06 + `_index`）  
-**挂载关系：** `APP-SSD` 与 `/mnt/Dev` 同盘（nvme2n1p1）；历史上存在 ` /media/xuyu/APP-SSD/Code/Github` 旧副本（约 31G），**与 Dev 树已分叉，不再作为主写路径**。
+**挂载关系：** `APP-SSD` 与 `/mnt/Dev` 同盘（nvme2n1p1）。  
+**2026-11-19：** `/media/xuyu/APP-SSD/Code/Github` 已为 **符号链接 → `/mnt/Dev/code/Github`**；旧 31G 副本已删除，不再存在第二写源。
 
 ## local 端到端（已复验）
 
@@ -57,14 +58,17 @@ uv run image-similarity scan e2e-local --index-root /tmp/e2e-local
 
 - [x] `image-similarity` → `03-工具与实验/图像视频/`
 - [x] AIGC 权重 + PhotoSearch `PHOTOSEARCH_MODEL_PATH`
-- [ ] 全员约定：`cd ~/code/Github/...`（勿在 APP-SSD 旧树提交）
+- [x] 全员约定：`cd ~/code/Github/...`（APP `Code/Github` 已 symlink，与 Dev 同树）
 - [ ] `image-similarity` 工作区干净：`git status` 无 stray `uv.lock`
 
-### P1（2 周）— 双树收敛
+### P1（2 周）— 双树收敛 ✅（2026-11-19）
 
-- [ ] 盘点 `diff -rq`：`/media/xuyu/APP-SSD/Code/Github` vs `/mnt/Dev/code/Github`，逐仓 **以 Dev 为准 merge + push**
-- [ ] APP-SSD 上 **仅保留** `Research/`、`Gitee/` 等与 Dev 不重复部分；`Github` 改为 **符号链接 → `/mnt/Dev/code/Github`** 或只读说明文件
-- [ ] `_index/tools/sync_repos.py` 仅指向 Dev 根
+- [x] 盘点双树：报告见 `docs/reports/p1-dual-tree-diff-report-20261118.md`（195 vs 192 仓，仅 1 仓 HEAD 分叉）
+- [x] **NewsSentry** 在 Dev 合并 APP-SSD 线并 push（`2d89983` → gate 全绿 `c60e126`）；APP/Dev 同 HEAD
+- [x] `Github` → **symlink** `/mnt/Dev/code/Github`；遗留 `Github.bak-pre-symlink-20261119` 已删
+- [ ] `_index/tools/sync_repos.py` 仅指向 Dev 根（待在 server 上改脚本默认路径，非阻塞）
+
+**说明：** P1 后 `APP-SSD/Code/Github` 与 `~/code/Github` 为同一路径；`Research/`、`Gitee/` 仍在 `APP-SSD/Code/` 下独立保留。
 
 ### P2（1–2 月）— 产品整合
 

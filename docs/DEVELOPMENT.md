@@ -32,4 +32,4 @@ PhotoSearch embed 服务（独立实验，非本仓）：
 
 远程：`https://github.com/XucroYuri/image-similarity`
 
-局域网归并与双树收敛：`docs/LAN_DEV_CONSOLIDATION.md`（Ubuntu `~/code/Github` 为唯一可写根）。
+局域网归并与双树收敛：`docs/LAN_DEV_CONSOLIDATION.md`（**P1 已完成**；`APP-SSD/Code/Github` = symlink → Dev）。

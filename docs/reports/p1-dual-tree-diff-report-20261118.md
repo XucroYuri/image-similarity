@@ -1,5 +1,7 @@
 # P1 双树 diff 报告 (Github)
 
+**状态：P1 已收口（2026-11-19）** — NewsSentry 已 Dev 合并并 `c60e126`；`APP-SSD/Code/Github` 已 symlink 至 Dev，备份目录已删。
+
 生成时间: 2026-11-18 09:25 +0800
 
 ## 路径
